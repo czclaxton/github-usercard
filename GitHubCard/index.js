@@ -5,14 +5,34 @@
 
 const finishedCard = document.querySelector(".cards");
 
-axios.get(`https://api.github.com/users/czclaxton`).then(data => {
-  console.log("response: ", data);
-  const responseData = data.data;
+let cardGenerator = function(githubUsername) {
+  return axios
+    .get(`https://api.github.com/users/${githubUsername}`)
+    .then(data => {
+      console.log("response: ", data);
+      const responseData = data.data;
 
-  const newCard = cardCreator(responseData);
-  finishedCard.appendChild(newCard);
-  finishedCard.appendChild(newCard);
-});
+      const newCard = cardCreator(responseData);
+      finishedCard.appendChild(newCard);
+      finishedCard.appendChild(newCard);
+    });
+};
+
+cardGenerator("czclaxton");
+cardGenerator("tetondan");
+cardGenerator("dustinmyers");
+cardGenerator("justsml");
+cardGenerator("luishrd");
+cardGenerator("bigknell");
+
+// axios.get(`https://api.github.com/users/czclaxton`).then(data => {
+//   console.log("response: ", data);
+//   const responseData = data.data;
+
+//   const newCard = cardCreator(responseData);
+//   finishedCard.appendChild(newCard);
+//   finishedCard.appendChild(newCard);
+// });
 // .catch(error => {
 //   console.log('Error, please trying again later', error)
 // })
@@ -87,7 +107,7 @@ function cardCreator(userData) {
   cardInfo.classList.add("card-info");
   name.classList.add("username");
 
-  imgUrl.src.textContent = userData.avatar_url;
+  imgUrl.src = userData.avatar_url;
   name.textContent = userData.name;
   username.textContent = userData.login;
   location.textContent = userData.location;
@@ -96,6 +116,8 @@ function cardCreator(userData) {
   followers.textContent = userData.followers;
   following.textContent = userData.following;
   bio.textContent = userData.bio;
+
+  console.log(userData.avatar_url);
 
   return card;
 }
@@ -107,4 +129,3 @@ function cardCreator(userData) {
   luishrd
   bigknell
 */
-// https://api.github.com/users/bigknell
