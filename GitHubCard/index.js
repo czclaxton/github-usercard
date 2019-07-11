@@ -9,7 +9,6 @@ let cardGenerator = function(githubUsername) {
   return axios
     .get(`https://api.github.com/users/${githubUsername}`)
     .then(data => {
-      console.log("response: ", data);
       const responseData = data.data;
 
       const newCard = cardCreator(responseData);
@@ -18,12 +17,12 @@ let cardGenerator = function(githubUsername) {
     });
 };
 
-cardGenerator("czclaxton");
-cardGenerator("tetondan");
-cardGenerator("dustinmyers");
-cardGenerator("justsml");
-cardGenerator("luishrd");
-cardGenerator("bigknell");
+// cardGenerator("czclaxton");
+// cardGenerator("tetondan");
+// cardGenerator("dustinmyers");
+// cardGenerator("justsml");
+// cardGenerator("luishrd");
+// cardGenerator("bigknell");
 
 // axios.get(`https://api.github.com/users/czclaxton`).then(data => {
 //   console.log("response: ", data);
@@ -58,7 +57,17 @@ cardGenerator("bigknell");
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const githubUsername = [
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell"
+];
+
+githubUsername.forEach(person => {
+  cardGenerator(person);
+});
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -117,8 +126,6 @@ function cardCreator(userData) {
   following.textContent = userData.following;
   bio.textContent = userData.bio;
 
-  console.log(userData.avatar_url);
-
   return card;
 }
 
@@ -129,3 +136,10 @@ function cardCreator(userData) {
   luishrd
   bigknell
 */
+
+const addCardButton = document.querySelector(".addCardButton");
+
+addCardButton.addEventListener("click", () => {
+  formText = document.querySelector(".addCardInput").value;
+  console.log(formText);
+});
