@@ -3,20 +3,6 @@
            https://api.github.com/users/<your name>
 */
 
-const finishedCard = document.querySelector(".cards");
-
-let cardGenerator = function(githubUsername) {
-  return axios
-    .get(`https://api.github.com/users/${githubUsername}`)
-    .then(data => {
-      const responseData = data.data;
-
-      const newCard = cardCreator(responseData);
-      finishedCard.appendChild(newCard);
-      finishedCard.appendChild(newCard);
-    });
-};
-
 // cardGenerator("czclaxton");
 // cardGenerator("tetondan");
 // cardGenerator("dustinmyers");
@@ -57,18 +43,6 @@ let cardGenerator = function(githubUsername) {
           user, and adding that card to the DOM.
 */
 
-const githubUsername = [
-  "tetondan",
-  "dustinmyers",
-  "justsml",
-  "luishrd",
-  "bigknell"
-];
-
-githubUsername.forEach(person => {
-  cardGenerator(person);
-});
-
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -87,6 +61,38 @@ githubUsername.forEach(person => {
   </div>
 </div>
 */
+
+/* List of LS Instructors Github username's: 
+  tetondan
+  dustinmyers
+  justsml
+  luishrd
+  bigknell
+*/
+
+const finishedCard = document.querySelector(".cards");
+
+let cardGenerator = function(githubUsername) {
+  return axios
+    .get(`https://api.github.com/users/${githubUsername}`)
+    .then(data => {
+      const responseData = data.data;
+
+      const newCard = cardCreator(responseData);
+      finishedCard.appendChild(newCard);
+    });
+};
+
+const githubUsernames = [
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell",
+  "czclaxton"
+];
+
+githubUsernames.sort();
 
 function cardCreator(userData) {
   const card = document.createElement("div");
@@ -129,17 +135,19 @@ function cardCreator(userData) {
   return card;
 }
 
-/* List of LS Instructors Github username's: 
-  tetondan
-  dustinmyers
-  justsml
-  luishrd
-  bigknell
-*/
-
 const addCardButton = document.querySelector(".addCardButton");
 
-addCardButton.addEventListener("click", () => {
+addCardButton.addEventListener("click", e => {
   formText = document.querySelector(".addCardInput").value;
-  console.log(formText);
+  formTextBox = document.querySelector(".addCardForm");
+  e.preventDefault();
+  // githubUsernames.push(formText);
+  githubUsernames.unshift(formText);
+  cardGenerator(formText);
+  formTextBox.reset();
 });
+
+githubUsernames.forEach(person => {
+  cardGenerator(person);
+});
+// console.log(githubUsernames);
