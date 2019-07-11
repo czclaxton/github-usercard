@@ -3,9 +3,19 @@
            https://api.github.com/users/<your name>
 */
 
+const finishedCard = document.querySelector(".cards");
+
 axios.get(`https://api.github.com/users/czclaxton`).then(data => {
-  return console.log("response", data);
+  console.log("response: ", data);
+  const responseData = data.data;
+
+  const newCard = cardCreator(responseData);
+  finishedCard.appendChild(newCard);
+  finishedCard.appendChild(newCard);
 });
+// .catch(error => {
+//   console.log('Error, please trying again later', error)
+// })
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -49,7 +59,46 @@ const followersArray = [];
 </div>
 */
 
-const userInfo = function(userData) {};
+function cardCreator(userData) {
+  const card = document.createElement("div");
+  const imgUrl = document.createElement("img");
+  const cardInfo = document.createElement("div");
+  const name = document.createElement("h3");
+  const username = document.createElement("p");
+  const location = document.createElement("p");
+  const profile = document.createElement("p");
+  const profileUrl = document.createElement("a");
+  const followers = document.createElement("p");
+  const following = document.createElement("p");
+  const bio = document.createElement("p");
+
+  card.appendChild(imgUrl);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileUrl);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  card.classList.add("card");
+  cardInfo.classList.add("card-info");
+  name.classList.add("username");
+
+  imgUrl.src.textContent = userData.avatar_url;
+  name.textContent = userData.name;
+  username.textContent = userData.login;
+  location.textContent = userData.location;
+  profile.textContent = "Github Account";
+  profileUrl.href.textContent = userData.html_url;
+  followers.textContent = userData.followers;
+  following.textContent = userData.following;
+  bio.textContent = userData.bio;
+
+  return card;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
@@ -58,3 +107,4 @@ const userInfo = function(userData) {};
   luishrd
   bigknell
 */
+// https://api.github.com/users/bigknell
